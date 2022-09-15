@@ -1,0 +1,102 @@
+@import url("https://fonts.googleapis.com/css2?family=Recursive:wght@400;700&display=swap");
+
+html {
+	position: relative;
+	height: 100vh;
+	width: 100vw;
+	font-size: 62.5% !important;
+	font-family: "Recursive", sans-serif;
+	overflow: hidden;
+}
+
+html::before {
+	content: "";
+	position: absolute;
+	top: 0;
+	left: 0;
+	height: 100%;
+	width: 100%;
+	background-image: linear-gradient(to right, #00b4db, #0083b0);
+}
+
+.App {
+	margin: 120px auto;
+	max-width: 80%;
+	display: flex;
+	flex-direction: column;
+	align-items: center;
+	text-align: center;
+	color: white;
+	font-family: "Recursive", sans-serif;
+}
+/*----- typographie ----- */
+
+.App h1 {
+	margin-bottom: 2.2rem;
+	font-family: inherit;
+	font-size: 3.2rem;
+	font-family: inherit;
+}
+
+.App h3 {
+	font-family: inherit;
+	font-size: 2.8rem;
+}
+
+.App p {
+	font-family: inherit;
+	font-size: 1.6rem;
+	display: inline-block;
+}
+
+/*---------------------*/
+/*---- component  -----*/
+.card-weather.ui.card {
+	padding: 3rem 6rem;
+	box-shadow: 2px 2px 2px 1px rgba(0, 0, 0, 0.2);
+	max-width: 100%;
+	width: 30vw;
+	min-height: 40vh;
+	background: url("../assets/weather-img01.jpg") no-repeat center bottom / cover;
+}
+
+.header {
+	padding: 10px;
+	border-radius: 15px;
+}
+
+.main,
+.middle {
+	margin-bottom: 3rem;
+}
+/*------------------------*/
+
+/*---- utility class -----*/
+
+.display-flex-column {
+	display: flex;
+	flex-direction: column;
+	flex-wrap: wrap;
+}
+
+.display-flex-columnb {
+	display: flex;
+	flex-direction: column;
+	flex-wrap: wrap;
+	justify-content: space-between;
+}
+
+.display-flex-between {
+	display: flex;
+	justify-content: space-between;
+	flex-wrap: wrap;
+}
+
+.display-flex-center {
+	display: flex;
+	align-items: center;
+	justify-content: center;
+	flex-wrap: wrap;
+}
+
+/*---------*/
