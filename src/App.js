@@ -1,61 +1,57 @@
 import React, { useEffect, useMemo, useState } from "react";
-import { Input } from "semantic-ui-react";
-import { useInput } from "./hooks/useInput";
-import WeatherUi from "./modules/weatherUI";
+import WeatherUi from "./components/weatherUI";
+import Inputs from "./components/Inputs";
+import TimeLocation from "./components/TimeLocation";
+import TemandDetails from "./components/TemandDetails";
+
 const Main = () => {
-	const [location, setLocation] = useInput("");
-	const [data, setData] = useState([]);
-	const url = `${process.env.REACT_APP_API_URL}/weather?q=${location.value}&units=imperial&APPID=${process.env.REACT_APP_API_KEY}`;
-	console.log(data);
+	const [query, setQuery] = useState("");
+	const [units, setUnits] = useState("imperial");
+	const [data, setData] = useState("");
+
+	const checkUrl = (query) => {
+		let url = "";
+		if (query.lat && query.lon) {
+			url = `${process.env.REACT_APP_API_URL}/weather?lat=${query.lat}&lon=${query.lon}&units=${units}&APPID=${process.env.REACT_APP_API_KEY}`;
+		} else {
+			url = `${process.env.REACT_APP_API_URL}/weather?q=${query}&units=${units}&APPID=${process.env.REACT_APP_API_KEY}`;
+		}
+
+		return url;
+	};
+
+	const showbg = () => {
+		let threshold = "";
+		if (!data.name) return "from-cyan-700 to-blue-700";
+		threshold = units == "metric" ? 15 : 60;
+		if (data.main.temp <= threshold) return "from-cyan-700 to-blue-700";
+		else return "from-yellow-700 to-orange-700";
+	};
 	useEffect(() => {
 		const fetchdata = async () => {
-			await fetch(url)
+			await fetch(checkUrl(query))
 				.then((res) => res.json())
 				.then((result) => {
 					setData(result);
-					console.log(result);
 				});
 		};
 		fetchdata();
-		// setData({
-		// 	coord: { lon: 2.3488, lat: 48.8534 },
-		// 	weather: [
-		// 		{ id: 803, main: "Clouds", description: "broken clouds", icon: "04d" },
-		// 	],
-		// 	base: "stations",
-		// 	main: {
-		// 		temp: 30.86,
-		// 		feels_like: 70.43,
-		// 		temp_min: 68.22,
-		// 		temp_max: 73.78,
-		// 		pressure: 1011,
-		// 		humidity: 59,
-		// 	},
-		// 	visibility: 10000,
-		// 	wind: { speed: 4.61, deg: 310 },
-		// 	clouds: { all: 75 },
-		// 	dt: 1663244639,
-		// 	sys: {
-		// 		type: 2,
-		// 		id: 2041230,
-		// 		country: "FR",
-		// 		sunrise: 1663219617,
-		// 		sunset: 1663265104,
-		// 	},
-		// 	timezone: 7200,
-		// 	id: 2988507,
-		// 	name: "Paris",
-		// 	cod: 200,
-		// });
-	}, [location.value]);
-
+	}, [query, units]);
 	return (
-		<div className="App">
-			<Input {...location} type="text" placeholder="Entrer le pays ... " />
-			{typeof data.main != "undefined" ? (
-				<WeatherUi weatherData={data} />
-			) : (
-				<div> no valid data !</div>
+		<div
+			className={`mx-auto max-w-screen-md  mt-20 py-5 px-32 bg-gradient-to-br  h-fit shadow-sm shadow-gray-400 bg-gradient-to-r ${showbg()} `}
+		>
+			<Inputs setQuery={setQuery} units={units} setUnits={setUnits} />
+			{data.name && (
+				<>
+					<TimeLocation
+						secs={data.dt}
+						timezone={data.timezone}
+						name={data.name}
+						country={data.sys.country}
+					/>
+					<TemandDetails weather={data} />
+				</>
 			)}
 		</div>
 	);

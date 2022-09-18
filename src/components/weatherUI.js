@@ -1,4 +1,3 @@
-import "./styles.css";
 import { Card, Header } from "semantic-ui-react";
 import moment from "moment";
 
