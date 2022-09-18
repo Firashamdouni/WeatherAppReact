@@ -1,8 +1,4 @@
-import React from "react";
 import { DateTime } from "luxon";
-import { data } from "autoprefixer";
-import { queryByRole } from "@testing-library/react";
-
 
 const formatToLocalTime = (
 	secs,
@@ -32,6 +28,5 @@ const formatTempDetailsWeather = (data) => {
 
 const iconFormatFromCode = (code) =>
 	`http://openweathermap.org/img/wn/${code}@2x.png`;
-
 
 export { iconFormatFromCode, formatToLocalTime, formatTempDetailsWeather };

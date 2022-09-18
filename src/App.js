@@ -1,5 +1,4 @@
 import React, { useEffect, useMemo, useState } from "react";
-import WeatherUi from "./components/weatherUI";
 import Inputs from "./components/Inputs";
 import TimeLocation from "./components/TimeLocation";
 import TemandDetails from "./components/TemandDetails";
