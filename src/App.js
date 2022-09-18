@@ -2,9 +2,11 @@ import React, { useEffect, useMemo, useState } from "react";
 import Inputs from "./components/Inputs";
 import TimeLocation from "./components/TimeLocation";
 import TemandDetails from "./components/TemandDetails";
+import { ToastContainer, toast } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
 
 const Main = () => {
-	const [query, setQuery] = useState("");
+	const [query, setQuery] = useState("paris");
 	const [units, setUnits] = useState("imperial");
 	const [data, setData] = useState("");
 
@@ -28,9 +30,11 @@ const Main = () => {
 	};
 	useEffect(() => {
 		const fetchdata = async () => {
+			toast.info("laoding!");
 			await fetch(checkUrl(query))
 				.then((res) => res.json())
 				.then((result) => {
+					toast.success(`fetched succesfully ${result.name}`);
 					setData(result);
 				});
 		};
@@ -52,6 +56,11 @@ const Main = () => {
 					<TemandDetails weather={data} />
 				</>
 			)}
+			<ToastContainer
+				position="top-right"
+				autoClose={5000}
+				newestOnTop={true}
+			/>
 		</div>
 	);
 };
